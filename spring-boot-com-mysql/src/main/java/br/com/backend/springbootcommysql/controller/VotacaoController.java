@@ -1,19 +1,16 @@
 package br.com.backend.springbootcommysql.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.backend.springbootcommysql.models.Votacao;
-import br.com.backend.springbootcommysql.repository.VotacaoRepository;
+import br.com.backend.springbootcommysql.models.dto.VotoDTO;
+import br.com.backend.springbootcommysql.service.VotacaoService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 
 @CrossOrigin(origins = "*")
@@ -23,18 +20,14 @@ import io.swagger.annotations.ApiOperation;
 public class VotacaoController {
 	
 	@Autowired
-	VotacaoRepository votacaoRepository;
-	
-	@PostMapping("/votacao")
-	@ApiOperation(value="Adicona os votos")
-	public Votacao saveVotacao(@RequestBody Votacao votacao) {
-		return votacaoRepository.save(votacao);
-	}
-	
-	@GetMapping("/votacao")
-	@ApiOperation(value="Busca os votos")
-	public List<Votacao> listaVotacao(){
-		return votacaoRepository.findAll();
-	}
+    VotacaoService votoService;
 
+    @PostMapping({"/v1.0"})
+    public ResponseEntity<String> enviarMensagem(@RequestBody VotoDTO voto){
+    	
+    	//votoService.validaVoto(voto);
+    	//votoService.sendMessage(voto.toJson());
+        return ResponseEntity.ok().body("Voto Computado: ");
+    }
+	
 }
